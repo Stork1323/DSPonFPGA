@@ -1,0 +1,6 @@
+for ((i=0;i<32;i++)); do echo "logic [31:0] coeff_$i;"; done > temp.txt
+less coefficent_passband8810_32.txt | awk '{for (i=1;i<=NF;i++) {print "assign coeff_" i-1 " = " int($i*(2^31))}}' > temp.txt
+for ((i=0;i<33;i++)); do echo "delay_q[$i] <= 32'd0;"; done > temp.txt
+for ((i=1;i<33;i++)); do pre=$(($i-1)); echo "delay_q[$i] <= delay_q[$pre];"; done > temp.txt
+for ((i=1;i<33;i++)); do echo "assign res_w[$i] = delay_q[$i] * coeff_$i + res_w[$(($i-1))];"; done
+
