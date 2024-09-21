@@ -3,4 +3,5 @@ less coefficent_passband8810_32.txt | awk '{for (i=1;i<=NF;i++) {print "assign c
 for ((i=0;i<33;i++)); do echo "delay_q[$i] <= 32'd0;"; done > temp.txt
 for ((i=1;i<33;i++)); do pre=$(($i-1)); echo "delay_q[$i] <= delay_q[$pre];"; done > temp.txt
 for ((i=1;i<33;i++)); do echo "assign res_w[$i] = delay_q[$i] * coeff_$i + res_w[$(($i-1))];"; done
+less coeff_ecg | awk '{for (i=1;i<=NF;i++) {j=int($i*(2^31)); if (j<0) {printf "-";j=j*(-1)}; printf "32'\''d%d, ",j}}' > temp.txt  ; open temp.txt
 
