@@ -11,7 +11,7 @@ module FIR #(
 );
 
   logic signed [31:0] delay_q [0:N_TAPS-1]; // delay_q contain delay data
-  logic signed [63:0] mac [0:N_TAPS]; // value of mac
+  logic signed [63:0] mac [0:N_TAPS-1]; // value of mac
   logic signed [COEFF_W-1:0] coeffs [0:N_TAPS-1]; // coefficients array
 
   localparam SHIFT_BIT = COEFF_W - DATA_W;
@@ -45,6 +45,6 @@ module FIR #(
             mac[i] = delay_q[i] * coeffs[i] + mac[i-1];
         end
     end
-  assign data_out = (mac[32] >>> (64-DATA_W));
+  assign data_out = (mac[N_TAPS-1] >>> (64-DATA_W));
 
 endmodule
