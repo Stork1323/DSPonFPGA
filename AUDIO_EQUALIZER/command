@@ -1,0 +1,1 @@
+less coeff_3band/treble | awk '{for (i=1;i<=NF;i++) {if ($i < 0) {printf "-"; s=-1} else {s=1}; printf "32'\''d%d, ", (2^31)*$i*s}}' > temp_treb.txt; open temp_treb.txt
